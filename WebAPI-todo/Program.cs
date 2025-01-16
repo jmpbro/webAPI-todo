@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+
+// middleware to redirect URL   
+app.UseRewriter(new RewriteOptions().AddRedirect("jobs/(.*)", "todos/$1"));
 
 var todos = new List<Todo>();
 
