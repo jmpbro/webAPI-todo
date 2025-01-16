@@ -21,4 +21,4 @@ DELETE http://localhost:5242/todos/1
 ###
 
 // middleware so that the server can handle request if id name is input differently
-GET http://localhost:5242/task/2
+GET http://localhost:5242/task/1
