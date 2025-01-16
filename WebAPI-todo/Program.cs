@@ -5,7 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 // middleware to redirect URL   
-app.UseRewriter(new RewriteOptions().AddRedirect("jobs/(.*)", "todos/$1"));
+app.UseRewriter(new RewriteOptions().AddRedirect("task/(.*)", "todos/$1"));
+
+
+// cutom middleware
+app.Use(async (context, next) => {
+    Console.WriteLine($"[{context.Request.Method} {context.Request.Path} {DateTime.UtcNow}] Started.");
+    await next(context);
+    Console.WriteLine($"[{context.Request.Method}] {context.Request.Path} {context.Request.Path} {DateTime.UtcNow}] Finished.");
+});
 
 var todos = new List<Todo>();
 
@@ -37,4 +45,4 @@ app.MapDelete("/todos/{id}", (int id) =>
 
 app.Run();
 
-public record Todo(int Id, string Name, DateTime DueDate, bool inCompleted); // record type
+public record Todo(int Id, string Name, DateTime DueDate, bool isCompleted); // record type
